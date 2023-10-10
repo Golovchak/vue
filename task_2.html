@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="css/style.css">
+	<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+	<title>Document</title>
+</head>
+
+<body>
+	<section class="wrapper">
+		<h1 class="title">Задача 2.</h1>
+		<div class="solution" id="app2">
+			<div class="string">
+				<label for="input-month">Введіть номер місяця</label>
+				<input type="number" name="input-month" id="" v-model="month">
+			</div>
+			<span>{{toAdvice}}</span>
+			<div>{{result}}</div>
+			<div class="task-2">
+				<img :src="source" alt="">
+			</div>
+
+		</div>
+		</div>
+
+		</div>
+		<a href="index.html">Повернутися до завдань.</a>
+	</section>
+
+	<script>
+		const { createApp } = Vue;
+		const winter = {
+			advice: "Одягайте товсте пальто, теплі штани, світер та черевики",
+			source: "img/winter.jpg",
+		};
+		const spring = {
+			advice: "Весна - це пора коли можна відмовитися від важких зимових речей, але не слід одягатися надто легко. Тепле взуття та куртка завжди повинні бути під рукою",
+			source: "img/spring.jpg",
+		};
+		const summer = {
+			advice: "Літом можна одягатися в щось легеньке. Тут підійдуть босоніжки, шорти (спіднички) та футболка. Не завадять також сонцезахисні окуляри.",
+			source: "img/summer.jpg",
+		};
+		const autumn = {
+			advice: "Восени дерева дивують нас своїми барвами, а шелест листя під ногами звучить краще будь якої мелодії. Не забувайте вдягнути щось від вітру та змініть босоніжки на якесь закрите взуття.",
+			source: "img/autumn.jpg",
+		};
+		const app2 = createApp({
+
+
+
+			data() {
+				return {
+					month: null,
+					result: null,
+					source: null,
+				}
+			},
+
+			// methods: {
+			// },
+			computed: {
+				toAdvice() {
+					if (this.month < 0 || this.month > 12) {
+						return this.month = null
+					}
+					if (!Number.isSafeInteger(this.month)) {
+						return this.month = null
+					}
+					if (this.month <= 2 || this.month == 12) {
+						this.result = winter.advice
+						this.source = winter.source
+					}
+					if (this.month >= 3 && this.month <= 5) {
+						this.result = spring.advice
+						this.source = spring.source
+					}
+					if (this.month >= 6 && this.month <= 8) {
+						this.result = summer.advice
+						this.source = summer.source
+					}
+					if (this.month >= 9 && this.month <= 11) {
+						this.result = autumn.advice
+						this.source = autumn.source
+					}
+
+					// return null
+				}
+			}
+		}).mount('#app2')
+	</script>
+</body>
+
+</html>
