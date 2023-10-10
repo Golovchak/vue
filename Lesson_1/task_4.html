@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="css/style.css">
+	<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+	<title>Document</title>
+</head>
+
+<body>
+	<section class="wrapper">
+		<h1 class="title">Задача 4.</h1>
+		<div class="solution" id="app4">
+			<div class="string">
+				<label for="input-month">Введіть суму зарахування</label>
+				<input type="number" name="input-month" id="" v-model="cashSum">
+			</div>
+			<div class="string">
+				<p>Сума на рахунку</p>
+				<span :style="sumColor">{{cash}}</span>
+			</div>
+			<div class="string">
+				<p>Комісія за операцію</p>
+				<span style="color: #ff0000">{{commission()}}</span>
+			</div>
+			<div class="string">
+				<p>Сума до зарахування</p>
+				<span style="color: #00ff00">{{enrollmentSum}}</span>
+			</div>
+			<div class="string">
+				<p>Сума для зняття</p>
+				<span style="color: #ff0000">{{withdrawalSum}}</span>
+			</div>
+			<div class="string">
+				<p>Сума в долларах</p>
+				<span :style="usdColor">{{usdSum}}</span>
+			</div>
+			<div class="string">
+				<p>Сума в євро</p>
+				<span :style="euroColor">{{euroSum}}</span>
+			</div>
+			<span style="color: #ff0000">{{massage}}</span>
+			<div class="string">
+				<button @click="toEnrollment">Зарахувати</button>
+				<button @click="toWithdrawal">Зняти кошти</button>
+				<button @click="toClear">Очистити поле</button>
+			</div>
+		</div>
+
+
+		</div>
+		</div>
+
+		</div>
+		<a href="index.html">Повернутися до завдань.</a>
+	</section>
+
+	<script>
+		const { createApp } = Vue;
+
+		const app4 = createApp({
+			data() {
+				return {
+					cash: 0,
+					dollarRate: 38,
+					euroRate: 42,
+					cashSum: null,
+					massage: null,
+				}
+			},
+
+			methods: {
+				toEnrollment() {
+					this.cash = this.cash + this.cashSum;
+					this.cashSum = null
+				},
+
+				toWithdrawal() {
+					if (this.cashSum * 1.03 > this.cash) {
+						this.massage = "Недостання сума коштів для зняття готівки"
+						return false
+					}
+					this.cash = this.cash - this.cashSum;
+					this.cashSum = null
+				},
+
+				commission() {
+					if (this.cashSum < 0) return this.cashSum = null
+					return (this.cashSum * 0.03).toFixed(2)
+
+					if (this.withdrawalSum) {
+						this.enrollmentSum = null;
+						return (this.withdrawalSum * 0.03).toFixed(2)
+					}
+				},
+
+				toClear() {
+					this.cashSum = null;
+					this.massage = null;
+				}
+			},
+
+			computed: {
+				enrollmentSum() {
+					if (+this.cashSum == 0) {
+						return null
+					};
+					return (this.cashSum - (this.cashSum * 0.03).toFixed(2))
+				},
+				withdrawalSum() {
+					if (+this.cashSum == 0) {
+						return null
+					};
+					this.massage = ""
+					return (+this.cashSum + +(this.cashSum * 0.03).toFixed(2))
+				},
+
+				usdSum() {
+					if (this.cash == 0) {
+						return null
+					}
+					return (this.cash / this.dollarRate).toFixed(2)
+				},
+				usdColor() {
+					if ((this.cash / this.dollarRate) < 100) {
+						return "color: #ff0000"
+					} else return "color: #00ff00"
+				},
+				euroSum() {
+					if (this.cash == 0) {
+						return null
+					}
+					return (this.cash / this.euroRate).toFixed(2)
+				},
+				euroColor() {
+					if ((this.cash / this.euroRate) < 100) {
+						return "color: #ff0000"
+					} else return "color: #00ff00"
+				},
+			}
+		}).mount('#app4')
+	</script>
+</body>
+
+</html>
