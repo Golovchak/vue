@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="css/style.css">
+	<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+	<title>Document</title>
+</head>
+
+<body>
+	<section class="wrapper">
+		<h1 class="title">Задача 1.</h1>
+		<div class="solution" id="app1">
+			<div class="string">
+				<label for="num-passengers">Введіть кількість пасажирів</label>
+				<input type="number" name="num-passengers" id="" v-model="numberPassengers" min="0">
+			</div>
+			<div class="string">
+				<p>Необхідно автобусів:</p>
+				<span>{{busCounter}}</span>
+			</div>
+			<div class="string">
+				<p>Необхідно пляшок води:</p>
+				<span>{{2*numberPassengers}}</span>
+			</div>
+			<div class="string">
+				<p>Необхідно бутербродів:</p>
+				<span>{{3*numberPassengers}}</span>
+			</div>
+		</div>
+		</div>
+
+		</div>
+		<a href="index.html">Повернутися до завдань.</a>
+	</section>
+
+</body>
+<script>
+	const { createApp } = Vue;
+	const app1 = createApp({
+		data() {
+			return {
+				numberPassengers: null,
+			}
+		},
+
+		// methods: {
+		// 	busCounter() {
+		// 		return Math.ceil(this.numberPassengers / 20)
+		// 	}
+		// },
+		computed: {
+			busCounter() {
+				if (this.numberPassengers < 0) {
+					return this.numberPassengers = 0
+				}
+				if (!Number.isSafeInteger(this.numberPassengers)) {
+					return this.numberPassengers = 0
+				}
+				return Math.ceil(this.numberPassengers / 20)
+			}
+		}
+	}).mount('#app1')
+</script>
+
+</html>

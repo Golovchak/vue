@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="css/style.css">
+	<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+	<title>Document</title>
+</head>
+
+<body>
+	<section class="wrapper">
+		<h1 class="title">Задача 5.</h1>
+		<div class="solution" id="app5">
+			<div class="string">
+				<label for="input-login">Введіть логін</label>
+				<input type="text" name="input-login" id="1" v-model.trim="inputLogin" min="0">
+			</div>
+			<div class="string">
+				<label for="input-password">Введіть пароль</label>
+				<input type="password" name="input-password" id="2" v-model.trim="inputPassword" min="0">
+			</div>
+			<div>{{massage}}</div>
+			<div class="string">
+				<button @click="toConfirm">Підтвердити авторизацію</button>
+				<button @click="toClear">Очистити поля</button>
+			</div>
+		</div>
+
+		<a href="index.html">Повернутися до завдань.</a>
+	</section>
+
+</body>
+<script>
+	const { createApp } = Vue;
+	const users = [
+		{
+			login: "1",
+			password: "1"
+		},
+		{
+			login: "login",
+			password: "0000"
+		},
+		{
+			login: "login1",
+			password: "1111"
+		},
+		{
+			login: "login2",
+			password: "2222"
+		},
+		{
+			login: "login3",
+			password: "3333"
+		},
+	];
+
+	const app5 = createApp({
+		data() {
+			return {
+				inputLogin: null,
+				inputPassword: null,
+				massage: null
+			}
+		},
+		methods: {
+			toConfirm() {
+				for (i = 0; i < users.length; i++) {
+					// console.log(users[i].login);
+					// console.log(users[i].password);
+					if (users[i].login == this.inputLogin && users[i].password == this.inputPassword) {
+						return this.massage = "Доступ дозволено."
+					} else this.massage = "Доступ відхилено."
+				}
+			},
+
+			toClear() {
+				this.inputLogin = null;
+				this.inputPassword = null;
+			}
+		},
+
+		computed: {
+		}
+	}).mount('#app5')
+</script>
+
+</html>

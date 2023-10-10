@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="css/style.css">
+	<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+	<title>Document</title>
+</head>
+
+<body>
+	<section class="wrapper">
+		<h1 class="title">Задача 3.</h1>
+		<div class="solution" id="app3">
+			<div class="string">
+				<label for="input-month">Введіть початкове значення діапазону</label>
+				<input type="number" name="input-month" id="" v-model="num1">
+			</div>
+			<div class="string">
+				<label for="input-start-point">Введіть кінцеве значення діапазону</label>
+				<input type="number" name="input-month" id="" v-model="num2">
+			</div>
+			<div class="string">
+				<p for="input-finish-point">Число в межах діапазону</p>
+				<span>{{randomNum}}</span>
+			</div>
+			<button @click="generate">Згенерувати</button>
+
+		</div>
+		</div>
+
+		</div>
+		<a href="index.html">Повернутися до завдань.</a>
+	</section>
+
+	<script>
+		const { createApp } = Vue;
+
+		const app3 = createApp({
+			data() {
+				return {
+					num1: null,
+					num2: null,
+					randomNum: null,
+				}
+			},
+
+			methods: {
+				generate() {
+					if (this.num2 < this.num1) (this.num2 = this.num1)
+					if (this.num2 !== this.num1) {
+						this.randomNum = (Math.random() * (this.num2 - this.num1) + this.num1)
+					} else {
+						this.randomNum = ("введіть число більше " + this.num1)
+					}
+				}
+			},
+			computed: {
+
+			}
+		}).mount('#app3')
+	</script>
+</body>
+
+</html>
