@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="css/style.css">
+	<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+	<title>Document</title>
+</head>
+
+<body>
+	<section class="wrapper">
+		<h1 class="title">Задача 1.</h1>
+		<div class="solution" id="app1">
+			<div class="row">
+				<label for="input-login">Введіть логін</label>
+				<input type="text" name="input-login" id="1" v-model.trim.lazy="inputLogin" min="0">
+			</div>
+			<div class="row">
+				<label for="input-password">Введіть пароль</label>
+				<input type="password" name="input-password" id="2" v-model.trim="inputPassword" min="0">
+			</div>
+			<div class="row">
+				<div v-if="accessIsAllowed">
+					<img src="img/smile.jpg" alt="">
+				</div>
+				<div v-else :class="ivanFinder">{{massage}}</div>
+
+			</div>
+			<div class="row">
+				<button @click="toConfirm">Підтвердити авторизацію</button>
+				<button @click="toClear">Очистити поля</button>
+			</div>
+		</div>
+
+		<a href="index.html">Повернутися до завдань.</a>
+	</section>
+
+</body>
+<script>
+	const { createApp } = Vue;
+	const users = [
+		{
+			login: "1",
+			password: "1"
+		},
+		{
+			login: "login",
+			password: "0000"
+		},
+		{
+			login: "login1",
+			password: "1111"
+		},
+		{
+			login: "login2",
+			password: "2222"
+		},
+		{
+			login: "login3",
+			password: "3333"
+		},
+	];
+
+	const app1 = createApp({
+		data() {
+			return {
+				inputLogin: null,
+				inputPassword: null,
+				accessIsAllowed: null,
+				massage: null,
+			}
+		},
+		methods: {
+			toConfirm() {
+				for (i = 0; i < users.length; i++) {
+					if (users[i].login === this.inputLogin && users[i].password === this.inputPassword) {
+						this.toClear();
+						return this.accessIsAllowed = true;
+					}
+				}
+				this.massage = "Ввели невірний логін або пароль";
+				this.accessIsAllowed = false;
+			},
+
+			toClear() {
+				this.inputLogin = null;
+				this.inputPassword = null;
+				this.accessIsAllowed = null;
+			},
+		},
+
+		computed: {
+			ivanFinder() {
+				if (this.accessIsAllowed === false) {
+					if (this.inputLogin === "ivan" || this.inputLogin === "Ivan") return "massage-blue"
+					else return "massage-red"
+				}
+			},
+		}
+	}).mount('#app1')
+</script>
+
+</html>

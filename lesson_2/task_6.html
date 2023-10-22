@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="css/style.css">
+	<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+	<title>Document</title>
+	<style>
+		.orders-table {
+			border: 2px solid #000;
+		}
+
+		.table-columns {
+			display: flex;
+
+		}
+
+		.label {
+			margin-left: 20px;
+		}
+
+		.column-title {
+			font-weight: bold;
+			text-align: center;
+		}
+
+		.column {
+			font-size: 16px;
+			align-items: center;
+			justify-content: space-between;
+			margin: 5px;
+			flex: 0 0 32%;
+		}
+
+		.column-item {
+			border: 2px solid #000;
+			padding: 5px 10px;
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+		}
+
+		.item {
+			margin: 0;
+			padding: 5px;
+		}
+	</style>
+</head>
+
+<body>
+
+	<section class="wrapper">
+		<h1 class="title">Задача 6.</h1>
+		<div class="solution" id="app6">
+			<div class="orders-table ">
+				<label class="label">Нова замовлена страва
+					<input type="text" v-model="orderedDish">
+					<button @click="addOrder">Додати</button>
+				</label>
+				<div class="table-columns">
+					<div class="waiting-cooking column">
+						<div class="column-title column-item">Очікують виконання</div>
+						<div v-for="dish in addedDish" :key="dish.id" class="column-item">
+							<span>{{dish.name}}</span><button @click="startCook(dish.id)" class="item">Готувати</button>
+						</div>
+					</div>
+
+					<div class="is-being-prepared column">
+						<div class="column-title column-item">Виконується</div>
+						<div v-for="dish in cookedDish" :key="dish.id" class="column-item">
+							<span>{{dish.name}}</span><button @click="serveTheDish(dish.id)" class="item">Готово</button>
+						</div>
+					</div>
+
+					<div class="prepared-dish column">
+						<div class="column-title column-item">Готові до виносу</div>
+						<div v-for="dish in servedDish" :key="dish.id" class="column-item">
+							<span>{{dish.name}}</span><button @click="completeOrder(dish.id)" class="item">Подано</button>
+						</div>
+					</div>
+				</div>
+
+			</div>
+
+		</div>
+
+		<a href="index.html">Повернутися до завдань.</a>
+	</section>
+
+</body>
+<script>
+	const { createApp } = Vue;
+	let ordersPerDay = 0;
+
+	const app6 = createApp({
+		data() {
+			return {
+				orderedDish: null,
+				addedDish: [],
+				cookedDish: [],
+				servedDish: [],
+			}
+		},
+
+		computed: {
+		},
+
+		methods: {
+			orderCounter() {
+				return ++ordersPerDay
+			},
+
+			addOrder() {
+				if (this.orderedDish) {
+					const dish = {
+						id: this.orderCounter(),
+						name: this.orderedDish,
+					}
+					this.addedDish.push(dish);
+					this.orderedDish = null;
+				}
+			},
+			startCook(num) {
+				for (i = 0; i < this.addedDish.length; i++) {
+					if (this.addedDish[i].id == num) {
+						this.cookedDish.push(this.addedDish[i]);
+						this.addedDish.splice(i, 1);
+						break
+					}
+				}
+			},
+			serveTheDish(num) {
+				for (i = 0; i < this.cookedDish.length; i++) {
+					if (this.cookedDish[i].id == num) {
+						this.servedDish.push(this.cookedDish[i]);
+						this.cookedDish.splice(i, 1);
+						break
+					}
+				}
+			},
+			completeOrder(num) {
+				for (i = 0; i < this.servedDish.length; i++) {
+					if (this.servedDish[i].id == num) {
+						this.servedDish.splice(i, 1);
+						break
+					}
+				}
+			}
+
+		},
+
+	}).mount('#app6')
+</script>
+
+</html>

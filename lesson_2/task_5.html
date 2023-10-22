@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="css/style.css">
+	<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+	<title>Document</title>
+</head>
+
+<body>
+
+	<section class="wrapper">
+		<h1 class="title">Задача 5.</h1>
+		<div class="solution" id="app5">
+			<div class="search-example">
+
+				<template v-for="elem in searchResult" :key="elem.id">
+					<div class="search-example__item">
+						<div class="row__item">
+							<img :src="elem.imgUrl" alt="">
+							<div>
+								<h3>{{elem.site}}</h3>
+								<h5>{{elem.fullAddress}}</h5>
+							</div>
+						</div>
+					</div>
+					<h2 style="color: blue">{{elem.title}}</h2>
+					<div class="row description">{{elem.description}}</div>
+				</template>
+			</div>
+		</div>
+
+		<a href="index.html">Повернутися до завдань.</a>
+	</section>
+
+</body>
+<script>
+	const { createApp } = Vue;
+
+	const resourceList = [
+		{
+			id: 1,
+			imgUrl: "img/smile.jpg",
+			site: "some-site.com.ua",
+			fullAddress: "some-site.com.ua/grg/index",
+			title: "Something wat you search",
+			description: "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Minus magnam repellendus possimus deleniti quisquam rerum et perspiciatis nostrum, error exercitationem omnis obcaecati. Expedita nihil modi eos cumque, sequi sed nisi veritatis alias ea ullam voluptatem excepturi perspiciatis quibusdam quos sit.",
+		},
+		{
+			id: 2,
+			imgUrl: "img/smile.jpg",
+			site: "some-site.com.ua",
+			fullAddress: "some-site.com.ua/asdfadsf/sdafasedf/grg/index",
+			title: "Something wat you search",
+			description: "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Minus magnam repellendus possimus deleniti quisquam rerum et perspiciatis nostrum.",
+		},
+		{
+			id: 3,
+			imgUrl: "img/smile.jpg",
+			site: "other-site.com",
+			fullAddress: "other-site.com/hgjhytg/fgh/fdgh/index.html",
+			title: "Another searching result",
+			description: "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Minus magnam repellendus possimus deleniti quisquam rerum et perspiciatis nostrum, error exercitationem omnis obcaecati. Expedita nihil modi eos cumque, sequi sed nisi veritatis alias ea ullam voluptatem excepturi perspiciatis quibusdam quos sit.",
+		},
+		{
+			id: 4,
+			imgUrl: "img/smile.jpg",
+			site: "another-site.com",
+			fullAddress: "another-site.com/hgjhytg/fgh/fdgh/index.html",
+			title: "Another searching result",
+			description: "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Minus magnam repellendus possimus deleniti quisquam rerum et perspiciatis nostrum, error exercitationem omnis obcaecati. Expedita nihil modi eos cumque, sequi sed nisi veritatis alias ea ullam voluptatem excepturi perspiciatis quibusdam quos sit.",
+		},
+
+	];
+
+	const app5 = createApp({
+		data() {
+			return {
+			}
+		},
+		methods: {
+		},
+
+		computed: {
+			searchResult() {
+				return resourceList;
+			}
+		}
+	}).mount('#app5')
+</script>
+
+</html>
