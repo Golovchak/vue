@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="css/style.css">
+	<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+	<title>Document</title>
+</head>
+
+<body>
+	<section class="wrapper">
+		<h1 class="title">Задача 4.</h1>
+		<div class="solution" id="app4">
+			<div class="row" v-for="elem, in showSalaryList" :key="elem.id">
+				<p>{{elem.name}}</p>
+				<p>{{elem.salary}}</p>
+			</div>
+
+
+		</div>
+
+
+		<a href="index.html">Повернутися до завдань.</a>
+	</section>
+
+	<script>
+		const { createApp } = Vue;
+		const salaryList = [
+			{
+				id: 1,
+				name: "Ivan",
+				salary: 3324,
+			},
+			{
+				id: 2,
+				name: "Petro",
+				salary: 2541,
+			},
+			{
+				id: 3,
+				name: "Jana",
+				salary: 5021,
+			},
+			{
+				id: 4,
+				name: "Stepan",
+				salary: 4256,
+			},
+			{
+				id: 5,
+				name: "Mykola",
+				salary: 3951,
+			},
+		]
+		const app4 = createApp({
+			data() {
+				return {
+				}
+			},
+
+			methods: {
+			},
+
+			computed: {
+				showSalaryList() {
+					return salaryList;
+				}
+			}
+		}).mount('#app4')
+	</script>
+</body>
+
+</html>

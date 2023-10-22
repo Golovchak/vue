@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="css/style.css">
+	<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+	<title>Document</title>
+</head>
+
+<body>
+	<section class="wrapper">
+		<h1 class="title">Задача 2.</h1>
+		<div class="solution" id="app2">
+			<div class="row">
+				<label for="input-month">Оберіть будь ласка тип квитка</label>
+				<select name="ticket-type" id="" v-model="passengerData.ticketType" @change="chooseTicket">
+					<option value="businessClass">Бізнес клас</option>
+					<option value="economClass">Економ клас</option>
+				</select>
+			</div>
+			<div v-show="passengerData.ticketType">
+				<div v-if="passengerData.ticketType == 'businessClass'" class="flight-conditions">
+					<img src="img/business_class.jpg" alt="">
+					<div class="proffer-list">
+						<div v-if="passengerData.choice1 === null" class="proffer1">
+							Бажаєте коньяку?
+							<button @click="accept1">Так</button>
+							<button @click="reject1">НІ</button>
+						</div>
+
+						<div v-if="passengerData.choice1 && passengerData.secondChoice1 === null" class="proffer1">
+							Бажаєте чогось до коньяку?
+							<button @click="anotherAccept1">Так</button>
+							<button @click="anotherAccept1">НІ</button>
+						</div>
+
+						<div v-if="passengerData.choice2 === null" class="proffer2">
+							Бажаєте газету?
+							<button @click="accept2">Так</button>
+							<button @click="reject2">НІ</button>
+						</div>
+					</div>
+				</div>
+				<div v-else class="flight-conditions">
+					<img src="img/clouds.jpg" alt="">
+					<div class="proffer-list">
+						<div v-if="!passengerData.choice1" class="proffer1">
+							Бажаєте пиво?
+							<button @click="accept1">Так</button>
+							<button @click="reject1">НІ</button>
+
+						</div>
+						<div v-if="!passengerData.choice2" class="proffer2">
+							Бажаєте чіпси?
+							<button @click="accept2">Так</button>
+							<button @click="reject2">НІ</button>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div v-show="listChecked">
+				<button @click="acceptPassengerInfo">Зберегти замовлення</button>
+			</div>
+
+		</div>
+
+
+		</div>
+		<a href="index.html">Повернутися до завдань.</a>
+	</section>
+
+	<script>
+		const { createApp } = Vue;
+
+		const passengerList = [];
+
+		const app2 = createApp({
+			data() {
+				return {
+					passengerData: {
+						ticketType: null,
+						choice1: null,
+						choice2: null,
+
+						secondChoice1: null,
+
+					},
+
+				}
+			},
+
+			methods: {
+				chooseTicket() {
+					this.passengerData.choice1 = null;
+					this.passengerData.choice2 = null;
+					this.passengerData.secondChoice1 = null;
+				},
+				accept1() {
+					this.passengerData.choice1 = true;
+
+				},
+				accept2() {
+					this.passengerData.choice2 = true;
+				},
+				reject1() {
+					this.passengerData.choice1 = " ";
+					this.passengerData.secondChoice1 = " ";
+				},
+				reject2() {
+					this.passengerData.choice2 = " ";
+				},
+				anotherAccept1() {
+					this.passengerData.secondChoice1 = true;
+
+				},
+				anotherReject1() {
+					this.passengerData.secondChoice1 = " ";
+
+				},
+
+				acceptPassengerProffer() {
+					passengerList.push(this.passengerData);
+					// console.log(passengerList);
+				}
+
+				// menuList() {
+				// 	console.log(this.ticketType);
+				// }
+			},
+			computed: {
+				listChecked() {
+					for (elem in this.passengerData) {
+						// console.log(elem + " " + this.passengerData[elem]);
+						if (this.passengerData[elem] == null) return null
+					}
+					return true;
+				},
+
+			}
+		}).mount('#app2')
+	</script>
+</body>
+
+</html>

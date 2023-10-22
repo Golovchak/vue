@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="css/style.css">
+	<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+	<title>Document</title>
+</head>
+
+<body>
+	<style>
+		.answer-wrong {
+			outline: 3px solid red;
+		}
+
+		.answer-right {
+			outline: 3px solid green;
+		}
+	</style>
+	<section class="wrapper">
+		<h1 class="title">Задача 3.</h1>
+		<div class="solution" id="app3">
+			<div :class="['flight-conditions', isRightAnswer]">
+				<img :src="imgSource" alt="">
+				<!-- <P>{{animal}}</P> -->
+
+			</div>
+			<div class="row">
+				<label for="input-word">What animal is shown in the picture</label>
+				<input type="text" name="input-word" id="" v-model.lazy.trim="enteredWord">
+			</div>
+			<div class="row">
+				<P>{{massage}}</P>
+			</div>
+
+			<div class="row">
+				<button @click="showAnimal">Розпочати</button>
+				<button @click="buttonConfirm">Підтвердити</button>
+				<button @click="buttonReject">Очистити все</button>
+			</div>
+
+		</div>
+		</div>
+
+		</div>
+		<a href="index.html">Повернутися до завдань.</a>
+	</section>
+
+	<script>
+		const { createApp } = Vue;
+
+		const englishTrainer = [
+			{
+				id: 1,
+				kindOfAnimal: "cat",
+				url: "img/animal1.jpg",
+			},
+			{
+				id: 2,
+				kindOfAnimal: "dog",
+				url: "img/animal2.jpg",
+			},
+			{
+				id: 3,
+				kindOfAnimal: "pig",
+				url: "img/animal3.jpg",
+			},
+			{
+				id: 4,
+				kindOfAnimal: "parrot",
+				url: "img/animal4.jpg",
+			},
+			{
+				id: 5,
+				kindOfAnimal: "butterfly",
+				url: "img/animal5.jpg",
+			},
+			{
+				id: 6,
+				kindOfAnimal: "rat",
+				url: "img/animal6.jpg",
+			},
+		]
+
+		const app3 = createApp({
+			data() {
+				return {
+					enteredWord: null,
+					imgSource: null,
+					animal: null,
+					massage: null,
+					isRightAnswer: null,
+				}
+			},
+
+			methods: {
+				buttonConfirm() {
+					if (this.enteredWord.toLowerCase() == this.animal) {
+						this.massage = "Ти молодець!";
+						this.isRightAnswer = "answer-right"
+					} else this.isRightAnswer = "answer-wrong"
+				},
+
+				buttonReject() {
+					this.enteredWord = null;
+					this.imgSource = null;
+					this.animal = null;
+					this.massage = null;
+					this.isRightAnswer = null;
+				},
+
+				showAnimal() {
+					if (this.enteredWord === null) {
+						let index = Math.floor(Math.random() * englishTrainer.length);
+						console.log(index);
+						this.animal = englishTrainer[index].kindOfAnimal;
+						this.imgSource = englishTrainer[index].url;
+					};
+
+				},
+				// computed: {
+				// 		}
+
+			}
+		}).mount('#app3')
+	</script>
+</body>
+
+</html>
