@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="css/style.css">
+	<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+	<style>
+		.row {
+			display: flex;
+			margin-bottom: 70px;
+		}
+
+		.column {
+			flex: 0 1 50%;
+		}
+	</style>
+	<title>Document</title>
+</head>
+
+<body>
+	<section class="wrapper">
+		<h1 class="title">Задача 2.</h1>
+		<div class="solution" id="app2">
+			<div class="filter-form row">
+				<div class="select-mark column">
+
+					<label for="car-mark">Оберіть марку автомобіля: </label>
+					<select name="car-mark" v-model="selectedMark">
+						<option v-for="(mark, index) in markFilterList" :key="index" :value="mark"> {{mark}}</option>
+					</select>
+				</div>
+				<!-- @change="setFilter" -->
+				<div class="select-yer column">
+					<label for="car-yer">Оберіть рік випуску: </label>
+					<select name="car-yer" v-model="selectedYer">
+						<option v-for="(yer, index) in yerFilterList" :key="index" :value="yer">{{yer}}</option>
+
+					</select>
+
+				</div>
+
+			</div>
+			<div class="filtered-list">
+				<div v-for="(car, index) in filteredList" :key="index">
+					{{car.mark}} - {{car.yer}}p. - {{car.price}}$
+				</div>
+			</div>
+			<!-- <div class="filtered-list">
+				<div v-for="(car, index) in carsList" :key="index">
+					{{car.mark}} - {{car.yer}}p. - {{car.price}}$
+				</div>
+			</div> -->
+		</div>
+		<a href="index.html">Повернутися до завдань.</a>
+	</section>
+
+	<script>
+		const { createApp } = Vue;
+
+		const app2 = createApp({
+			data() {
+				return {
+					selectedMark: null,
+					selectedYer: null,
+					carsList: [
+						{
+							mark: "Audi",
+							yer: 2000,
+							price: 7000,
+						},
+						{
+							mark: "Mersedes",
+							yer: 2018,
+							price: 25000,
+						},
+						{
+							mark: "Opel",
+							yer: 2000,
+							price: 5000,
+						},
+						{
+							mark: "Opel",
+							yer: 2004,
+							price: 15000,
+						},
+					]
+				}
+			},
+			computed: {
+				markFilterList() {
+					let markList = [];
+					let j = 0;
+					for (i = j; i < this.carsList.length; i++) {
+						if (!markList.includes(this.carsList[i].mark)) {
+							markList[j] = this.carsList[i].mark;
+							j++;
+						}
+					}
+					return markList
+				},
+				yerFilterList() {
+					let yerList = [];
+					let j = 0;
+					for (i = j; i < this.carsList.length; i++) {
+						if (!yerList.includes(this.carsList[i].yer)) {
+							yerList[j] = this.carsList[i].yer;
+							j++;
+						}
+					}
+					return yerList
+				},
+
+				filteredList() {
+					console.log(this.selectedMark);
+					console.log(this.selectedYer);
+
+					// return this.carsList
+					return this.carsList.filter((car) => this.filteredByProperty(car))
+				},
+			},
+
+			methods: {
+
+				filteredByProperty(car) {
+					console.log(this.selectedMark);
+					console.log(this.selectedYer);
+					// console.log(car);
+					return (
+						(!this.selectedMark || this.selectedMark == car.mark) &&
+						(!this.selectedYer || this.selectedYer == car.yer)
+					)
+				},
+
+			}
+		}).mount('#app2')
+	</script>
+</body>
+
+</html>

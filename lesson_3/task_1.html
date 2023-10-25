@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="css/style.css">
+	<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+	<style>
+		.lists {
+			display: flex;
+			column-gap: 20px;
+
+		}
+
+		.column {
+			text-align: center;
+			flex: 0 1 50%;
+		}
+
+		.list {
+			padding: 10px 10px;
+			border: 5px solid red;
+		}
+
+		.list div {
+			padding-left: 10px;
+		}
+
+		.selected {
+			border: 3px solid blue;
+		}
+
+		.button-area {
+			min-height: 80px;
+
+		}
+
+		.couple {
+			min-height: 150px;
+		}
+	</style>
+	<title>Document</title>
+</head>
+
+<body>
+	<section class="wrapper">
+		<h1 class="title">Задача 1.</h1>
+		<div class="solution" id="app1">
+			<div class="lists">
+				<div class="column">
+					Хлопці
+					<div class="list">
+						<div ref="boysList" v-for="(name, index) in boys" :key="index" @click="chooseBoy(index)">
+							{{name}}
+						</div>
+					</div>
+				</div>
+				<div class="column">
+					Дівчата
+
+					<div class="list">
+						<div ref="girlList" v-for="(name, index) in girls" :tabindex="index" :key="index" @click="chooseGirl(index)">
+							{{name}}
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="button-area">
+
+				<button v-show="isEnableCreating" @click="createCouple()">Додати пару</button>
+			</div>
+			<div class="couple">
+				<h3> Пари</h3>
+				<div v-if="coupleList.length" class="list">
+					<div v-for="(couple, index) in coupleList" :key="index">
+						{{couple}}
+					</div>
+				</div>
+				<a href="index.html">Повернутися до завдань.</a>
+	</section>
+
+</body>
+<script>
+	const { createApp } = Vue;
+
+	let selectedBoy = null;
+	let selectedGirl = null;
+	let boyIndex = null;
+	let girlIndex = null;
+
+	const app1 = createApp({
+		data() {
+			return {
+				boys: [
+					"Іван",
+					"Петро",
+					"Степан",
+					"Олег",
+				],
+				girls: [
+					'Тетяна',
+					'Наталія',
+					'Оксана',
+				],
+				coupleList: [],
+				boy: null,
+				girl: null,
+			}
+		},
+		computed: {
+			isEnableCreating() {
+				return this.boy && this.girl
+			},
+
+		},
+		methods: {
+			chooseBoy(index) {
+				if (selectedBoy && selectedBoy !== this.$refs.boysList[index]) {
+					this.deleteClass(selectedBoy)
+				} else if (selectedBoy == this.$refs.boysList[index]) {
+					this.deleteClass(selectedBoy)
+					selectedBoy = null
+					this.boy = null
+					return false
+				}
+				this.boy = this.boys[index]
+				boyIndex = index;
+				console.log(this.boys[index]);
+				selectedBoy = this.$refs.boysList[index]
+				this.addClass(selectedBoy)
+			},
+
+			chooseGirl(index) {
+				if (selectedGirl && selectedGirl !== this.$refs.girlList[index]) {
+					this.deleteClass(selectedGirl)
+				} else if (selectedGirl == this.$refs.girlList[index]) {
+					this.deleteClass(selectedGirl)
+					selectedGirl = null
+					this.girl = null
+					return false
+				}
+				this.girl = this.girls[index]
+				girlIndex = index;
+				selectedGirl = this.$refs.girlList[index]
+				this.addClass(selectedGirl)
+			},
+
+			addClass(selectedName) {
+				selectedName.classList.add('selected')
+			},
+			deleteClass(selectedName) {
+				selectedName.classList.remove('selected')
+			},
+			createCouple() {
+				let couple = this.boy + " - " + this.girl
+				this.coupleList.push(couple)
+				this.boy = null
+				this.girl = null
+				this.deleteClass(selectedBoy)
+				this.deleteClass(selectedGirl)
+				selectedBoy = null
+				selectedGirl = null
+				this.boys.splice(boyIndex, 1);
+				this.girls.splice(girlIndex, 1);
+
+			}
+		},
+	}).mount('#app1')
+</script>
+
+</html>
